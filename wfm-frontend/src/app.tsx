@@ -8,6 +8,9 @@ import HistoryRouter from './components/history-route';
 import browserHistory from './browser-history';
 import SignUpScreen from './pages/signup-screen/signup-screen';
 import UserScreen from './pages/user-screen/user-screen';
+import SignUpLoginScreen from './pages/signup-login-screen';
+import axios from 'axios';
+
 
 export default function App(): JSX.Element {
   return (
@@ -16,6 +19,7 @@ export default function App(): JSX.Element {
         <Route path={AppRoutes.Main.FullPath} element={<MainScreen />} />
         <Route path={AppRoutes.Login.FullPath} element={<LoginScreen />} />
         <Route path={AppRoutes.SignUp.FullPath} element={<SignUpScreen />} />
+        <Route path = {AppRoutes.SignUpLogin.FullPath} element={<SignUpLoginScreen />} />
         <Route path={AppRoutes.User.FullPath} element={
           <PrivateRoute>
             <UserScreen />

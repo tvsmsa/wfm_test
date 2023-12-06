@@ -11,6 +11,9 @@ export const AppRoutes = {
   User: {
     FullPath: '/user/:id',
   },
+  SignUpLogin: {
+    FullPath: '/signuplogin'
+  },
   Error: {
     FullPath: '*'
   },
