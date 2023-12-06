@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_username, validate_password, validate_first_name, validate_last_name
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
@@ -48,3 +49,4 @@ class UserView(APIView):
 	def get(self, request):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+

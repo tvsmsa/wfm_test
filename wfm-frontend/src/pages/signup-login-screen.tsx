@@ -1,10 +1,6 @@
-import { useEffect, ChangeEventHandler, FormEventHandler, MouseEventHandler, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../components/layout';
 import axios from 'axios';
-import { useAppDispatch } from '../hooks';
-import { loginAction } from '../store/api-actions';
-import { useNavigate } from 'react-router-dom';
-import { AppRoutes } from '../app-routes';
 
 export default function SignUpLoginScreen(): JSX.Element {
   axios.defaults.xsrfCookieName = 'csrftoken';
@@ -14,12 +10,14 @@ export default function SignUpLoginScreen(): JSX.Element {
     baseURL: "http://127.0.0.1:8000"
   });
 
+  const [currentUser, setCurrentUser] = useState(false);
   const [registrationToggle, setRegistrationToggle] = useState(false)
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('');
-  
+  const currentFirstName = ''
+
   function update_form_btn() {
     if (registrationToggle) {
       setRegistrationToggle(false);
@@ -28,6 +26,25 @@ export default function SignUpLoginScreen(): JSX.Element {
     }
   }
   
+  useEffect(() => {
+    client.get("/api/user")
+    .then(function(res) {
+      setCurrentUser(true);
+    })
+    .catch(function(error) {
+      setCurrentUser(false);
+    });
+  }, []);
+
+  axios.get('http://localhost:3000/attempt', {
+  params: {
+    quiz_id: 6
+  }
+}).then((res) => {
+   // handle success
+   console.log(res);
+  });
+
   function submitRegistration(e:any) {
     e.preventDefault();
     client.post(
@@ -45,7 +62,9 @@ export default function SignUpLoginScreen(): JSX.Element {
           username: username,
           password: password
         }
-      );
+      ).then (function(res) {
+        setCurrentUser(true);
+      });;
     });
   }
 
@@ -57,9 +76,42 @@ export default function SignUpLoginScreen(): JSX.Element {
         username: username,
         password: password
       }
-    );
+    ).then(function(res) {
+      setCurrentUser(true);
+    });;
   }
 
+  function submitLogout(e:any) {
+    e.preventDefault();
+    client.post(
+      "/api/logout",
+      {withCredentials: true}
+    ).then(function(res) {
+      setCurrentUser(false);
+    });
+  }
+
+  if (currentUser)  return(
+    <Layout>
+    <article className="user">
+      <div className="user__info">
+        <div className="user__image">
+          <svg width="270" height="270" viewBox="0 0 270 270" fill="none">
+            <rect width="270" height="270" rx="40" fill="#5B5E5F" />
+            <use xlinkHref="#user"></use>
+          </svg>
+        </div>
+        <div className="user__data">
+          <div className="user__fisrt-name">{firstName}</div>
+          <div className="user__last-name">{lastName}</div>
+        </div>
+      </div>
+      <form onSubmit={submitLogout}>
+      <button className="user__signout-btn btn-reset" type='submit'>Выйти</button>
+      </form>
+    </article>
+  </Layout>
+  )
   return (
     registrationToggle ? (
     <Layout>

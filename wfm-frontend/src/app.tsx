@@ -19,7 +19,7 @@ export default function App(): JSX.Element {
         <Route path={AppRoutes.Main.FullPath} element={<MainScreen />} />
         <Route path={AppRoutes.Login.FullPath} element={<LoginScreen />} />
         <Route path={AppRoutes.SignUp.FullPath} element={<SignUpScreen />} />
-        <Route path = {AppRoutes.SignUpLogin.FullPath} element={<SignUpLoginScreen />} />
+        <Route path = {AppRoutes.UserFull.FullPath} element={<SignUpLoginScreen />} />
         <Route path={AppRoutes.User.FullPath} element={
           <PrivateRoute>
             <UserScreen />
