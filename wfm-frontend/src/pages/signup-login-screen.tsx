@@ -17,6 +17,8 @@ export default function SignUpLoginScreen(): JSX.Element {
   const [registrationToggle, setRegistrationToggle] = useState(false)
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('');
   
   function update_form_btn() {
@@ -32,15 +34,16 @@ export default function SignUpLoginScreen(): JSX.Element {
     client.post(
       "/api/register",
       {
-        email: email,
         username: username,
+        firstName: firstName,
+        lastName: lastName,
         password: password
       }
     ).then(function(res) {
       client.post(
         "/api/login",
         {
-          email: email,
+          username: username,
           password: password
         }
       );
@@ -52,7 +55,7 @@ export default function SignUpLoginScreen(): JSX.Element {
     client.post(
       "/api/login",
       {
-        email: email,
+        username: email,
         password: password
       }
     );
@@ -65,15 +68,27 @@ export default function SignUpLoginScreen(): JSX.Element {
         <h1 className="signup__title title-reset">Регистрация</h1>
         <form onSubmit={e=>submitRegistration(e)} className="signup__form" action="#">
           <div className="signup__input-group">
-            <label className="signup__label visually-hidden" htmlFor="first-name">Email</label>
+            <label className="signup__label visually-hidden" htmlFor="first-name">Имя</label>
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               className="signup__input"
               type="first-name"
-              placeholder="Email"
+              placeholder="Имя"
               name="first-name"
               id="first-name"
+            />
+          </div>
+          <div className="signup__input-group">
+            <label className="signup__label visually-hidden" htmlFor="last-name">Фамилия</label>
+            <input
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="signup__input"
+              type="last-name"
+              placeholder="Фамилия"
+              name="last-name"
+              id="last-name"
             />
           </div>
           <div className="signup__input-group">

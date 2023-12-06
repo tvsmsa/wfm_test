@@ -3,31 +3,28 @@ from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
 def custom_validation(data):
-    email = data['email'].strip()
     username = data['username'].strip()
+    first_name = data['first_name'].strip()
+    last_name = data['last_name'].strip()
     password = data['password'].strip()
     ##
-    if not email or UserModel.objects.filter(email=email).exists():
-        raise ValidationError('choose another email')
+    if not username or UserModel.objects.filter(username = username).exists():
+        raise ValidationError('choose another username')
     ##
+    if not last_name:
+        raise ValidationError('a last name is needed')
+    if not first_name:
+        raise ValidationError('a first name is needed')
     if not password or len(password) < 8:
         raise ValidationError('choose another password, min 8 characters')
     ##
-    if not username:
-        raise ValidationError('choose another username')
     return data
 
-
-def validate_email(data):
-    email = data['email'].strip()
-    if not email:
-        raise ValidationError('an email is needed')
-    return True
 
 def validate_username(data):
     username = data['username'].strip()
     if not username:
-        raise ValidationError('choose another username')
+        raise ValidationError('a username is needed')
     return True
 
 def validate_password(data):
@@ -35,3 +32,9 @@ def validate_password(data):
     if not password:
         raise ValidationError('a password is needed')
     return True
+
+def validate_last_name(data):
+    last_name = data['last_name'].strip()
+    if not last_name:
+        raise ValidationError('a last name is needed')
+    return True    
