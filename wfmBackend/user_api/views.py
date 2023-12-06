@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 from rest_framework import permissions, status
-from .validations import custom_validation, validate_username, validate_password
+from .validations import custom_validation, validate_username, validate_password, validate_first_name, validate_last_name
 # Create your views here.
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)

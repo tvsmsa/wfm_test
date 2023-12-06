@@ -15,7 +15,6 @@ export default function SignUpLoginScreen(): JSX.Element {
   });
 
   const [registrationToggle, setRegistrationToggle] = useState(false)
-  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('')
@@ -35,8 +34,8 @@ export default function SignUpLoginScreen(): JSX.Element {
       "/api/register",
       {
         username: username,
-        firstName: firstName,
-        lastName: lastName,
+        first_name: firstName,
+        last_name: lastName,
         password: password
       }
     ).then(function(res) {
@@ -55,7 +54,7 @@ export default function SignUpLoginScreen(): JSX.Element {
     client.post(
       "/api/login",
       {
-        username: email,
+        username: username,
         password: password
       }
     );

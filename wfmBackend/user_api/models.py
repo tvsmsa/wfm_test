@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 # Create your models here.
 
 class AppUserManager(BaseUserManager):
-	def create_user(self, username, password=None):
+	def create_user(self, username, first_name, last_name, password=None):
 		if not username:
 			raise ValueError('An username is required.')
 		if not password:
@@ -26,7 +26,6 @@ class AppUserManager(BaseUserManager):
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
 	user_id = models.AutoField(primary_key=True)
-	#email = models.EmailField(max_length=50, unique=True)
 	username = models.CharField(max_length=50,unique=True)
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
